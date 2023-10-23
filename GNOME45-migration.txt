@@ -1,0 +1,32 @@
+Changes to original repository
+https://github.com/gTile/gTile/
+
+- Remove support for older GNOME-versions
+- Start to migrate import clauses to new format
+- Add minor necessities, like export default, to support Gnome45
+
+I have managed to migrate part of the imports via
+    https://github.com/gjsify/ts-for-gir
+
+specifically
+    npx @ts-for-gir/cli generate
+which generates the types to @types-directory
+
+For whatever reason, seems that the npm-installed + imported via 
+    @node_modules/@girs
+do not work as assumed
+
+What is missing
+    - import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+        No idea currently, how to migrate these. Perhaps some manual migration via
+        gresource list  /usr/share/gnome-shell/org.gnome.Extensions.data.gresource 
+            /org/gnome/Extensions/dbus-interfaces/org.gnome.Shell.Extensions.xml
+            /org/gnome/Extensions/style.css
+            /org/gnome/Extensions/ui/extension-row.ui
+            /org/gnome/Extensions/ui/extensions-window.ui
+        gresource extract  /usr/share/gnome-shell/org.gnome.Extensions.data.gresource /org/gnome/Extensions/style.cs
+        and marking these for import, would be needed
+
+    - GIR-packages, that were not generated. Either find a way to generate these or find a way to get the 
+
+    - "other" Gnome45 changes
